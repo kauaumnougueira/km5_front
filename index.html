@@ -7,6 +7,24 @@
     <title>KM5</title>
 </head>
 <body>
-    
+    <button onclick = "get()"></button>
 </body>
+<script>
+    fetch('http://127.0.0.1:8000/api/getclientes',{
+        method: 'GET',
+        headers: {
+            'X-CSRF-TOKEN': token
+        },
+        mode: 'cors'
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        window.alert("cliente cadastrado com sucesso!")
+        window.location.href = "painel.html"
+    })
+    .catch(error => {
+        console.error(error);
+    });
+</script>
 </html>
