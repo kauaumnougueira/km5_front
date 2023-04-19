@@ -3,28 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KM5</title>
 </head>
 <body>
-    <button onclick = "get()"></button>
+    <button onclick = "get()"> TESTE FETCH </button>
 </body>
 <script>
-    fetch('http://127.0.0.1:8000/api/getclientes',{
-        method: 'GET',
-        headers: {
-            'X-CSRF-TOKEN': token
-        },
-        mode: 'cors'
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        window.alert("cliente cadastrado com sucesso!")
-        window.location.href = "painel.html"
-    })
-    .catch(error => {
-        console.error(error);
-    });
+    const token = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    function get(){
+        fetch('http://127.0.0.1:8000/api/getclientes',{
+            method: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': token
+            },
+            mode: 'cors'
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
 </script>
 </html>
