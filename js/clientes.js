@@ -2,11 +2,12 @@ import { get } from './apiConsumo.js'
 
 function criarTabela(div, token){
     const container = document.createElement('div')
-    container.classList.add('container', 'shadow-lg');
+    container.setAttribute('id', 'div-table')
+    container.classList.add('container', 'shadow-lg', 'bg-light');
     
-    const titulo = document.createElement('div')
-    titulo.textContent = "CLIENTES"
-    container.appendChild(titulo)
+    //const titulo = document.createElement('div')
+    //titulo.textContent = "CLIENTES"
+    //container.appendChild(titulo)
 
     const row = document.createElement('div')
     row.classList.add('row', 'justify-content-center')
@@ -67,6 +68,62 @@ function criarTabela(div, token){
 
 export { criarTabela }
 
-function alimentarTabela(){
+function formCadastro(){
+    const container = document.createElement('div');
+    container.classList.add('container', 'shadow-lg', 'bg-light');
+
+    const form = document.createElement('form');
+
+    const form_group1 = document.createElement('div');
+    form_group1.classList.add('form-group');
+
+    const label1 = document.createElement('label');
+    label1.innerHTML = "nome";
+
+    const input1 = document.createElement('input');
+    input1.classList.add('form-control');
+    input1.setAttribute('placeholder', 'nome');
+
+    form_group1.appendChild(label1);
+    form_group1.appendChild(input1);
+
+    const form_group2 = document.createElement('div');
+    form_group2.classList.add('form-group');
+
+    const label2 = document.createElement('label');
+    label2.innerHTML = "telefone";
+
+    const input2 = document.createElement('input');
+    input2.classList.add('form-control');
+    input2.setAttribute('placeholder', '(99) 9 9999-9999');
+
+    form_group2.appendChild(label2);
+    form_group2.appendChild(input2);
+
+    const form_group3 = document.createElement('div');
+    form_group3.classList.add('form-group');
+
+    const label3 = document.createElement('label');
+    label3.innerHTML = "endereco";
+
+    const input3 = document.createElement('input');
+    input3.classList.add('form-control');
+    input3.setAttribute('placeholder', 'rua x quadra y casa z');
+
+    form_group3.appendChild(label3);
+    form_group3.appendChild(input3);
+
+    const button = document.createElement('button');
+    button.setAttribute('type', 'submit');
+    button.classList.add('btn', 'btn-primary');
+
+    form.appendChild(form_group1);
+    form.appendChild(form_group2);
+    form.appendChild(form_group3);
+    form.appendChild(button);
+
+    container.appendChild(form);
 
 }
+
+export { formCadastro }
