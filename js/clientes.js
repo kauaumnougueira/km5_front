@@ -1,4 +1,5 @@
 import { get } from './apiConsumo.js'
+import { criarCliente } from './apiConsumo.js'
 
 function criarTabela(div, token){
     const container = document.createElement('div')
@@ -64,13 +65,18 @@ function criarTabela(div, token){
     row.appendChild(col)
     container.appendChild(row)
     div.appendChild(container);
+    history.pushState(null, '', '/clientes')
 }
 
 export { criarTabela }
 
-function formCadastro(){
+function formCadastro(div, token){
     const container = document.createElement('div');
-    container.classList.add('container', 'shadow-lg', 'bg-light');
+    container.classList.add('container', 'shadow-lg', 'bg-light', 'p-5');
+
+    const h1 = document.createElement('h1')
+    h1.innerHTML = "Cadastro de Clientes"
+    container.appendChild(h1)
 
     const form = document.createElement('form');
 
@@ -83,6 +89,7 @@ function formCadastro(){
     const input1 = document.createElement('input');
     input1.classList.add('form-control');
     input1.setAttribute('placeholder', 'nome');
+    input1.setAttribute('name', 'nome')
 
     form_group1.appendChild(label1);
     form_group1.appendChild(input1);
@@ -96,6 +103,7 @@ function formCadastro(){
     const input2 = document.createElement('input');
     input2.classList.add('form-control');
     input2.setAttribute('placeholder', '(99) 9 9999-9999');
+    input2.setAttribute('name', 'telefone')
 
     form_group2.appendChild(label2);
     form_group2.appendChild(input2);
@@ -109,21 +117,26 @@ function formCadastro(){
     const input3 = document.createElement('input');
     input3.classList.add('form-control');
     input3.setAttribute('placeholder', 'rua x quadra y casa z');
+    input3.setAttribute('name', 'endereco')
 
     form_group3.appendChild(label3);
     form_group3.appendChild(input3);
 
     const button = document.createElement('button');
     button.setAttribute('type', 'submit');
-    button.classList.add('btn', 'btn-primary');
+    button.classList.add('btn', 'btn-primary', 'mx-auto', 'd-block');
+    button.innerHTML = "Enviar"
 
     form.appendChild(form_group1);
     form.appendChild(form_group2);
     form.appendChild(form_group3);
     form.appendChild(button);
+    criarCliente(token, form)
 
     container.appendChild(form);
 
+    div.appendChild(container)
+    history.pushState(null, 'http://127.0.0.1:5500/index.html/cadastro', 'cadastro')
 }
 
 export { formCadastro }

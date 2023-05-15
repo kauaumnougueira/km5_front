@@ -7,3 +7,4 @@ function render(div, component){
         })
         .catch(error => console.error(error));
 }
+

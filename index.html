@@ -39,10 +39,24 @@
     function createCliente(){
         mainDiv.innerHTML = " " //limpa
         import('./js/clientes.js').then(({ formCadastro }) => {
-            formCadastro(mainDiv, token)
+            formCadastro(mainDiv)
         })
     }
-    
+
+    window.addEventListener('popstate', function(event) {
+        const rotaAtual = window.location.pathname;
+
+        if (rotaAtual === '/nova-rota') {
+            
+        } else if (rotaAtual === '/clientes') {
+            window.location.href = "http://127.0.0.1:5500/index.html"
+            viewClientes()
+        } else {
+            // Exibir o conteúdo padrão, caso nenhuma rota correspondente seja encontrada
+        }
+    });
+
+
     window.createCliente = createCliente
     window.viewClientes = viewClientes
 </script>
