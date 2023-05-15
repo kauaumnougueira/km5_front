@@ -12,24 +12,29 @@
 
 <body>
     
-    <div id="header"></div>
+    <div id="header"></div><!-- Button trigger modal -->
     
     <div id="main"></div>
-
+    
 </body>
 <script src="js/spa.js"></script>
-<script src="js/apiConsumo.js"></script>
-<script>
+<script type="module">
     const token = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    //renderizando header
     const headerDiv = document.getElementById('header')
     const headerComp = 'componentes/header.html'
     window.onload = render(headerDiv, headerComp)
 
-    const mainDiv = document.getElementById('main')
-    const mainComp = 'componentes/main.html'
-  
-    function getClientes(){
-        get()
+    //renderizando main
+    function viewClientes(){
+        const mainDiv = document.getElementById('main')
+        mainDiv.innerHTML = " " //limpa
+        import('./js/clientes.js').then(({ criarTabela }) => {
+            criarTabela(mainDiv, token)
+        })
     }
+
+    window.viewClientes = viewClientes
 </script>
 </html>
