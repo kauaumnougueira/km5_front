@@ -36,7 +36,7 @@ function criarCliente(token, form){
         .then(data => {
             //console.log(data);
             window.alert("cliente atualizado com sucesso!")
-            window.location.href = "http://127.0.0.1:5500/index.html/clientes"
+            return 1
         })
         .catch(error => {
             console.error(error);

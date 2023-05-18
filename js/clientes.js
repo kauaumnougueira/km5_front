@@ -65,7 +65,6 @@ function criarTabela(div, token){
     row.appendChild(col)
     container.appendChild(row)
     div.appendChild(container);
-    history.pushState(null, '', '/clientes')
 }
 
 export { criarTabela }
@@ -102,8 +101,9 @@ function formCadastro(div, token){
 
     const input2 = document.createElement('input');
     input2.classList.add('form-control');
-    input2.setAttribute('placeholder', '(99) 9 9999-9999');
     input2.setAttribute('name', 'telefone')
+    input2.setAttribute('placeholder', '(00) 0000-0000');
+    $(input2).mask("(00) 0 0000-0000");
 
     form_group2.appendChild(label2);
     form_group2.appendChild(input2);
@@ -131,12 +131,15 @@ function formCadastro(div, token){
     form.appendChild(form_group2);
     form.appendChild(form_group3);
     form.appendChild(button);
-    criarCliente(token, form)
 
     container.appendChild(form);
 
     div.appendChild(container)
-    history.pushState(null, 'http://127.0.0.1:5500/index.html/cadastro', 'cadastro')
+
+    if(criarCliente(token, form) === 1){
+        div.innerHTML = " "
+      //  criarTabela(div, token)
+    }
 }
 
 export { formCadastro }

@@ -18,6 +18,9 @@
     <div id="main"></div>
     
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
 <script src="js/spa.js"></script>
 <script type="module">
     const token = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -28,6 +31,7 @@
     window.onload = render(headerDiv, headerComp)
 
     const mainDiv = document.getElementById('main')
+
     //renderizando main
     function viewClientes(){
         mainDiv.innerHTML = " " //limpa
@@ -39,23 +43,9 @@
     function createCliente(){
         mainDiv.innerHTML = " " //limpa
         import('./js/clientes.js').then(({ formCadastro }) => {
-            formCadastro(mainDiv)
+            formCadastro(mainDiv, token)
         })
     }
-
-    window.addEventListener('popstate', function(event) {
-        const rotaAtual = window.location.pathname;
-
-        if (rotaAtual === '/nova-rota') {
-            
-        } else if (rotaAtual === '/clientes') {
-            window.location.href = "http://127.0.0.1:5500/index.html"
-            viewClientes()
-        } else {
-            // Exibir o conteúdo padrão, caso nenhuma rota correspondente seja encontrada
-        }
-    });
-
 
     window.createCliente = createCliente
     window.viewClientes = viewClientes
