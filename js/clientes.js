@@ -47,7 +47,7 @@ function criarTabela(div, token){
         data.forEach(e => {
             const linha = document.createElement('tr')
             linha.setAttribute('scope', 'row')
-            const tdNome = document.createElement('td')
+            const tdNome = documenateElementt.cre('td')
             const tdTelefone = document.createElement('td')
             const tdEndereco = document.createElement('td')
             tdNome.textContent = e.nome
