@@ -1,4 +1,4 @@
-function get(token){
+function getClientes(token){
     return fetch('http://127.0.0.1:8000/api/getclientes',{
         method: 'GET',
         headers: {
@@ -16,7 +16,7 @@ function get(token){
     });
 }
 
-export { get }
+export { getClientes }
 
 function criarCliente(token, form){
     form.addEventListener('submit', (event) =>{
@@ -46,13 +46,13 @@ function criarCliente(token, form){
 
 export { criarCliente }
 
-function editarCliente(token, form){
+function editarCliente(token, form, id){
     form.addEventListener('submit', (event) =>{
         event.preventDefault();
 
         const formData = new FormData(form)
 
-        fetch('http://127.0.0.1:8000/api/updatecliente', {
+        fetch('http://127.0.0.1:8000/api/updatecliente/'+id, {
             method: 'PUT',
             body: formData,
             headers: {
@@ -73,3 +73,23 @@ function editarCliente(token, form){
 }
 
 export { editarCliente }
+
+function getCliente(token, id){
+    return fetch('http://127.0.0.1:8000/api/getcliente/'+id,{
+        method: 'GET',
+        headers: {
+            'X-CSRF-TOKEN': token
+        },
+        mode: 'cors'
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        return data
+    })
+    .catch(error => {
+        console.error(error);
+    });
+}
+
+export { getCliente }

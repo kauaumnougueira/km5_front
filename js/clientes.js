@@ -1,4 +1,4 @@
-import { get } from './apiConsumo.js'
+import { getClientes} from './apiConsumo.js'
 import { criarCliente } from './apiConsumo.js'
 
 function criarTabela(div, token){
@@ -43,11 +43,16 @@ function criarTabela(div, token){
 
     const tbody = document.createElement('tbody')
     
-    get(token).then(data => {
+    getClientes(token).then(data => {
         data.forEach(e => {
             const linha = document.createElement('tr')
+            linha.setAttribute('style', 'cursor: pointer; user-select: none')
             linha.setAttribute('scope', 'row')
-            const tdNome = documenateElementt.cre('td')
+            linha.addEventListener('click', (event) =>{
+                document.cookie = "id=" + e.id + "; path=/";
+                window.location.href = "perfil.html"
+            })
+            const tdNome = document.createElement('td')
             const tdTelefone = document.createElement('td')
             const tdEndereco = document.createElement('td')
             tdNome.textContent = e.nome
