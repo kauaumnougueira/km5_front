@@ -143,7 +143,7 @@ function formCadastro(div, token){
 
     if(criarCliente(token, form) === 1){
         div.innerHTML = " "
-      //  criarTabela(div, token)
+        //criarTabela(div, token)
     }
 }
 
