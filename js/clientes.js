@@ -50,7 +50,8 @@ function criarTabela(div, token){
             linha.setAttribute('scope', 'row')
             linha.addEventListener('click', (event) =>{
                 document.cookie = "id=" + e.id + "; path=/";
-                window.location.href = "perfil.html"
+                div.innerHTML = " "
+                render(div, '../perfil.html')
             })
             const tdNome = document.createElement('td')
             const tdTelefone = document.createElement('td')
