@@ -1,4 +1,4 @@
-import { getClientes} from './apiConsumo.js'
+import { get } from './apiConsumo.js'
 import { criarCliente } from './apiConsumo.js'
 
 function criarTabela(div, token){
@@ -42,8 +42,8 @@ function criarTabela(div, token){
     table.appendChild(thead)
 
     const tbody = document.createElement('tbody')
-    
-    getClientes(token).then(data => {
+    const rota = 'getclientes'
+    get(token, rota).then(data => {
         data.forEach(e => {
             const linha = document.createElement('tr')
             linha.setAttribute('style', 'cursor: pointer; user-select: none')
@@ -117,7 +117,7 @@ function formCadastro(div, token){
     form_group3.classList.add('form-group');
 
     const label3 = document.createElement('label');
-    label3.innerHTML = "endereco";
+    label3.innerHTML = "endereço";
 
     const input3 = document.createElement('input');
     input3.classList.add('form-control');
@@ -127,6 +127,21 @@ function formCadastro(div, token){
     form_group3.appendChild(label3);
     form_group3.appendChild(input3);
 
+    const form_group4 = document.createElement('div');
+    form_group4.classList.add('form-group');
+
+    const label4 = document.createElement('label');
+    label4.innerHTML = "cliente desde";
+
+    const input4 = document.createElement('input');
+    input4.classList.add('form-control');
+    input4.setAttribute('placeholder', 'DD/MM/AAAA');
+    input4.setAttribute('name', 'desde')
+    $(input4).mask("00/00/0000");
+
+    form_group4.appendChild(label4);
+    form_group4.appendChild(input4);
+
     const button = document.createElement('button');
     button.setAttribute('type', 'submit');
     button.classList.add('btn', 'btn-primary', 'mx-auto', 'd-block');
@@ -135,6 +150,7 @@ function formCadastro(div, token){
     form.appendChild(form_group1);
     form.appendChild(form_group2);
     form.appendChild(form_group3);
+    form.appendChild(form_group4);
     form.appendChild(button);
 
     container.appendChild(form);

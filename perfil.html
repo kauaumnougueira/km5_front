@@ -44,9 +44,26 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="row justify-content-md-center">
+                            <div class="col-2">
+                                <label>Cliente desde</label>
+                            </div>
+                            <div class="col-7">
+                                <input type="text" class="form-control" name="desde" required>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
             <button onclick="window.editar()" class="btn btn-primary rounded-0 col-1" id="btn" type="submit">editar</button>
+        </div>
+        <div class="row justify-content-md-center ml-5">
+            <h1 class="font-weight-bold m-2 text-secondary">HISTÓRICO</h1>
+        </div>
+        <div class="row" id="perfil-main">
+            <div class="col ml-5 mr-2" id="esq"></div>
+            <div class="col ml-2 mr-5" id="dir"></div>
         </div>
     </div>
 </body>
@@ -109,9 +126,7 @@
         //mandar dados
         const formData = new FormData(perfil)
 
-        if(inputsvalue[0] !== formData.get('nome') || inputsvalue[1] !== formData.get('telefone') || inputsvalue[2] !== formData.get('endereco')){
-            console.log(inputsvalue[0])
-            console.log(formData.get('nome'))
+        if(inputsvalue[0] !== formData.get('nome') || inputsvalue[1] !== formData.get('telefone') || inputsvalue[2] !== formData.get('endereco')|| inputsvalue[3] !== formData.get('desde')){
             import('./js/apiConsumo.js').then(({ editarCliente }) => {
                 editarCliente(token, formData, id)
             })
@@ -134,15 +149,56 @@
 
     window.onload = alimentacao()
     function alimentacao(){
-        import('./js/apiConsumo.js').then(({ getCliente }) => {
-            getCliente(token, id).then(data => {
+        //alimentação dos dados do cliente
+        import('./js/apiConsumo.js').then(({ get }) => {
+            let rota = 'getcliente/' + id
+            get(token, rota).then(data => {
                 inputs[0].setAttribute('value', data.nome)
                 inputs[1].setAttribute('value', data.telefone)
                 inputs[2].setAttribute('value', data.endereco)
+                inputs[3].setAttribute('value', data.desde)
+            })
+        })
+        //alimentação do histórico 
+        import('./js/apiConsumo.js').then(({ get }) => {
+            let rota = 'getclienteservico/' + id
+            //começar dos mais recentes
+            get(token, rota).then(data => {
+                for(let i = 0; i < data.length; i++){
+                    let rotaNova = 'getservico/' + data[i].id_servico
+                    get(token, rotaNova).then(e => {
+                        const esq = document.getElementById('esq')
+                        const dir = document.getElementById('dir')
+                        const div = document.createElement('div')
+                        div.classList.add('shadow-lg', 'bg-light', 'p-3', 'rounded', 'div-saltar', 'my-5')
+
+                        const p = document.createElement('p')
+                        p.innerHTML = 'serviço: <span class="text-dark">' + e.nome + '</span>'
+                        p.classList.add('font-weight-bold', 'text-secondary')
+                        const p1 = document.createElement('p')
+                        p1.innerHTML = 'preço: <span class="text-dark">' + data[i].preco + '</span>'
+                        p1.classList.add('font-weight-bold', 'text-secondary')
+                        const p2 = document.createElement('p')
+                        p2.innerHTML = 'descrição: <span class="text-dark">' + data[i].descricao + '</span>'
+                        p2.classList.add('font-weight-bold', 'text-secondary')
+                        const p3 = document.createElement('p')
+                        p3.innerHTML = '<span class="text-dark">' + data[i].data_contratacao + '</span>'
+                        p3.classList.add('font-weight-bold', 'text-secondary')
+
+                        div.appendChild(p)
+                        div.appendChild(p1)
+                        div.appendChild(p2)
+                        div.appendChild(p3)
+
+                        if(i % 2 == 0){
+                            esq.appendChild(div)
+                        }else{
+                            dir.appendChild(div)
+                        }
+                    })
+                }
             })
         })
     }
-
-    
 </script>
 </html>

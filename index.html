@@ -47,7 +47,14 @@
         })
     }
 
+    function servicos(){
+        mainDiv.innerHTML = " " //limpa
+        const servicos = 'servicos.html'
+        render(mainDiv, servicos)
+    }
+
     window.createCliente = createCliente
     window.viewClientes = viewClientes
+    window.servicos = servicos
 </script>
 </html>
