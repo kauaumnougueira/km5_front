@@ -1,4 +1,4 @@
-function render(div, component){
+function render(div, component, scriptsrc){
     //fetch de render
     fetch(component)
         .then(response => {
@@ -6,16 +6,19 @@ function render(div, component){
                 throw new Error(`Erro ao carregar o componente: ${response.status}`);
             }
             return response.text()
-        })
+        })  
         .then(html => {
             div.innerHTML = html
-            const scripts = div.querySelectorAll('script');
-      
-            scripts.forEach(script => {
-                const newScript = document.createElement('script');
-                newScript.textContent = script.textContent;
-                document.body.appendChild(newScript);
-            })})
+            if(scriptsrc !== null){
+                const script = document.createElement('script');
+                script.type = 'module'
+                script.src = scriptsrc;
+                script.onload = function() {
+                    console.log('Script carregado!');
+                };
+                div.appendChild(script)
+            }
+        })
         .catch(error => console.error(error));
 }
 

@@ -49,9 +49,10 @@ function criarTabela(div, token){
             linha.setAttribute('style', 'cursor: pointer; user-select: none')
             linha.setAttribute('scope', 'row')
             linha.addEventListener('click', (event) =>{
+                event.preventDefault()
                 document.cookie = "id=" + e.id + "; path=/";
                 div.innerHTML = " "
-                render(div, '../perfil.html')
+                render(div, '../perfil.html', 'js/perfil.js')
             })
             const tdNome = document.createElement('td')
             const tdTelefone = document.createElement('td')
