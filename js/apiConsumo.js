@@ -11,39 +11,43 @@ function get(token, rota){
         console.log(data);
         return data
     })
-    .catch(error => {
+    .catch(error => { 
         console.error(error);
     });
 }
 
 export { get }
 
-function criarCliente(token, form){
-    form.addEventListener('submit', (event) =>{
+function criarCliente(token, form) {
+    return new Promise((resolve, reject) => {
+      const handleFormSubmit = (event) => {
         event.preventDefault();
-
-        const formData = new FormData(form)
-
+  
+        const formData = new FormData(form);
+  
         fetch('http://127.0.0.1:8000/api/createcliente', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRF-TOKEN': token
-            },
-            mode: 'cors'
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-CSRF-TOKEN': token
+          },
+          mode: 'cors'
         })
-        .then(response => response.json())
-        .then(data => {
-            //console.log(data);
-            window.alert("cliente atualizado com sucesso!")
-            return 1
-        })
-        .catch(error => {
+          .then(response => response.json())
+          .then(data => {
+            window.alert("cliente atualizado com sucesso!");
+            resolve(1);
+          })
+          .catch(error => {
             console.error(error);
-        });
-    })
-}
-
+            reject(error);
+          });
+      };
+  
+      form.addEventListener('submit', handleFormSubmit);
+    });
+  }
+  
 export { criarCliente }
 
 function editarCliente(token, formData, id){

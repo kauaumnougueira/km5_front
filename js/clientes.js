@@ -52,7 +52,9 @@ function criarTabela(div, token){
                 event.preventDefault()
                 document.cookie = "id=" + e.id + "; path=/";
                 div.innerHTML = " "
-                render(div, '../perfil.html', 'js/perfil.js')
+                //render(div, '../perfil.html', 'js/perfil.js')
+                //nao renderiza mais, mas muda de pagina
+                location.href = "perfil.html"
             })
             const tdNome = document.createElement('td')
             const tdTelefone = document.createElement('td')
@@ -159,10 +161,14 @@ function formCadastro(div, token){
 
     div.appendChild(container)
 
-    if(criarCliente(token, form) === 1){
-        div.innerHTML = " "
-        //criarTabela(div, token)
-    }
+
+    criarCliente(token, form).then(result => {
+        if(result === 1){
+            div.innerHTML = " "
+            criarTabela(div, token)
+        }
+    })
+    
 }
 
 export { formCadastro }

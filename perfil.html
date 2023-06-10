@@ -1,56 +1,85 @@
-<div class="container shadow-lg bg-light">
-    <div class="row justify-content-md-center" id="perfil-header">
-        <div class="col-11 p-4">
-            <form id="perfil">
-                <div class="form-group">
-                    <div class="row justify-content-md-center">
-                        <div class="col-1">
-                            <label>Nome</label>
-                        </div>
-                        <div class="col-8">
-                            <input type="text" class="form-control" name="nome" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row justify-content-md-center">
-                        <div class="col-1">
-                            <label>Telefone</label>
-                        </div>
-                        <div class="col-8">
-                            <input type="text" class="form-control" name="telefone" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row justify-content-md-center">
-                        <div class="col-1">
-                            <label>Endereço</label>
-                        </div>
-                        <div class="col-8">
-                            <input type="text" class="form-control" name="endereco" required>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="import" href="header.html">
+    <link rel="stylesheet" href="style/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="header"></div><!-- Button trigger modal -->
+    <div class="container shadow-lg bg-light">
+        <div class="row justify-content-md-center" id="perfil-header">
+            <div class="col-11 p-4">
+                <form id="perfil">
+                    <div class="form-group">
+                        <div class="row justify-content-md-center">
+                            <div class="col-1">
+                                <label>Nome</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" name="nome" required>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="row justify-content-md-center">
-                        <div class="col-2">
-                            <label>Cliente desde</label>
-                        </div>
-                        <div class="col-7">
-                            <input type="text" class="form-control" name="desde" required>
+                    <div class="form-group">
+                        <div class="row justify-content-md-center">
+                            <div class="col-1">
+                                <label>Telefone</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" name="telefone" required>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                    <div class="form-group">
+                        <div class="row justify-content-md-center">
+                            <div class="col-1">
+                                <label>Endereço</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" name="endereco" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row justify-content-md-center">
+                            <div class="col-2">
+                                <label>Cliente desde</label>
+                            </div>
+                            <div class="col-7">
+                                <input type="text" class="form-control" name="desde" required>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <button onclick="window.editar()" class="btn btn-primary rounded-0 col-1" id="btn" type="submit">editar</button>
         </div>
-        <button onclick="window.editar()" class="btn btn-primary rounded-0 col-1" id="btn" type="submit">editar</button>
+        <div class="row justify-content-md-center ml-5">
+            <h1 class="font-weight-bold m-2 text-secondary">HISTÓRICO</h1>
+        </div>
+        <div class="row" id="perfil-main">
+            <div class="col ml-5 mr-2" id="esq"></div>
+            <div class="col ml-2 mr-5" id="dir"></div>
+        </div>
     </div>
-    <div class="row justify-content-md-center ml-5">
-        <h1 class="font-weight-bold m-2 text-secondary">HISTÓRICO</h1>
-    </div>
-    <div class="row" id="perfil-main">
-        <div class="col ml-5 mr-2" id="esq"></div>
-        <div class="col ml-2 mr-5" id="dir"></div>
-    </div>
-</div>
+    
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script src="js/spa.js"></script>
+<script src="js/header_links.js"></script>
+<script type="module" src="js/perfil.js"></script>
+<script>
+
+    //renderizando header
+    const headerDiv = document.getElementById('header')
+    const headerComp = 'componentes/header.html'
+    window.onload = render(headerDiv, headerComp, null)
+</script>
+</html>
