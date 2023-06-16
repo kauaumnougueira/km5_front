@@ -32,9 +32,7 @@ function createCliente(){
 function servicos(){
     //acho que essa aqui funciona melhor com redirecionamento
     
-    mainDiv.innerHTML = " " //limpa
-    const servicos = 'servicos.html'
-    render(mainDiv, servicos)
+    window.location.href= "servicos.html"
 }
 
 window.createCliente = createCliente
