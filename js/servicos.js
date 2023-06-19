@@ -6,7 +6,8 @@ function alimentacao() {
     get(token, rota).then(servico => {
       const servicos = document.getElementById('servicos-ul');
       servicos.innerHTML = ''; // Limpa os itens anteriores
-  
+
+
       servico.forEach(e => {
         const li = document.createElement('li');
         li.setAttribute('id', 'accordion-' + e.nome);
@@ -71,11 +72,24 @@ function alimentacao() {
                 li.appendChild(divAdcionar)
                 divButton.removeAttribute('disabled')
                 servicos.appendChild(li)
+                if(montagem.childNodes.length === 0){
+                    salvar.classList.remove('btn-warning')
+                    salvar.classList.add('btn-dark') 
+                    salvar.setAttribute('disabled', 'true')
+                }
             })
             liEscolhida.removeChild(divAdcionar)
             liEscolhida.appendChild(divRemover)
             divButton.setAttribute('disabled', 'true')
             montagem.appendChild(liEscolhida)
+
+            //cor do botão
+            const salvar = document.querySelector('#salvar')
+            if(montagem.childNodes.length !== 0){
+                salvar.classList.remove('btn-dark')
+                salvar.classList.add('btn-warning')
+                salvar.removeAttribute('disabled')
+            }
         })
 
         // Adiciona o acordeão
