@@ -29,7 +29,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="js/spa.js"></script>
-<script src="js/header_links.js"></script>
+<script type="module" src="js/apiConsumo.js"></script>
+<script src="js/rotas.js"></script>
 <script type="module">
     const token = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -41,6 +42,7 @@
     window.addEventListener('DOMContentLoaded', function() {
         const urlParams = new URLSearchParams(window.location.search);
         const action = urlParams.get('action');
+        const veio = urlParams.get('veio');
 
         if (action === "viewCliente"){
             viewClientes();
@@ -49,12 +51,11 @@
             history.replaceState({}, document.title, "index.html");
         }
         if(action === "createCliente"){
-            createCliente();
+            createCliente(veio);
 
             // Limpar o parâmetro da URL
             history.replaceState({}, document.title, "index.html");
         }
     })
-
 </script>
 </html>

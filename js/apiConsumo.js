@@ -71,3 +71,24 @@ function editarCliente(token, formData, id){
 }
 
 export { editarCliente }
+
+function criarClienteServico(token, rota){
+	fetch('http://127.0.0.1:8000/api/updatecliente/'+rota,{
+		method: 'POST',
+		headers: {
+			'X-CSRF-TOKEN': token
+		},
+		mode: 'cors'
+	})
+	.then(response => response.json())
+    .then(data => {
+        //console.log(data);
+        window.alert("cliente-servico atualizado com sucesso!")
+        return 1
+    })
+    .catch(error => {
+        console.error(error);
+    });
+}
+
+export { criarClienteServico }

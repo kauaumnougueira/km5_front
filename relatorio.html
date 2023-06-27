@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="import" href="header.html">
+    <link rel="stylesheet" href="style/style.css">
+    <title>Relatório</title>
+</head>
+<body class="bg-info">
+    <div id="header"></div><!-- Button trigger modal -->
+    <div class="container shadow-lg bg-light">
+        <div class="row justify-content-md-center p-3">
+            <div class="col-8 bg-light" id="montagem">
+                <h4 class="text-info">Relatório</h4>
+                <div class="row">
+                    <div class="input-group col-10">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Cliente</span>
+                        </div>
+                        <select name="clientes" id="clientes" class="form-control"></select>
+                    </div>      
+                    <div class="col-2">
+                        <button class="btn btn-info" id="cadastrar" onclick="createCliente('relatorio')" disabled>Cadastrar</button>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="sem">
+                        <input type="checkbox" name="sem" id="sem" class="ml-3"> Não achei o cliente
+                    </label>
+                </div>
+                <button class="btn btn-dark" id="salvar" disabled onclick="window.salvar()">Salvar</button> <!--dark se não houver nada-->
+                <p id="info"></p>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script src="js/spa.js"></script>
+<script src="js/rotas.js"></script>
+<script type="module" src="js/relatorio.js"></script>
+<script>
+    //renderizando header
+    const headerDiv = document.getElementById('header')
+    const headerComp = 'componentes/header.html'
+    window.onload = render(headerDiv, headerComp, null)
+
+    const check = document.querySelector('#sem')
+    check.addEventListener('click', () => {
+        const clientes = document.querySelector('#clientes')
+        const cadastrar = document.querySelector('#cadastrar')
+        const info = document.querySelector('#info')
+        if(check.checked){
+            clientes.setAttribute('disabled', 'true') //nao pode salvar relatorio se esse checkbox for acionado sem cadastro
+            cadastrar.removeAttribute('disabled')
+            info.textContent = 'não pode salvar'
+        }else{
+            clientes.removeAttribute('disabled')
+            cadastrar.setAttribute('disabled', 'true')
+            info.textContent = ' '
+        }
+        
+    })
+    
+
+</script>
+</html>

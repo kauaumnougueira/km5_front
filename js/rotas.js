@@ -18,23 +18,24 @@ function viewClientes(){
     
 }
 
-function createCliente(){
-    if(fileName !== "index.html"){
-        window.location.href = "index.html?action=createCliente"
-    }else{
-        mainDiv.innerHTML = " " //limpa
-        import('./clientes.js').then(({ formCadastro }) => {
-            formCadastro(mainDiv, token)
-        })
+function createCliente(veio = null) {
+    if (fileName !== "index.html") {
+      window.location.href = "index.html?action=createCliente&veio="+veio;
+    } else {
+      mainDiv.innerHTML = " "; // Limpa
+      import('./clientes.js').then(({ formCadastro }) => {
+        formCadastro(mainDiv, token, veio);
+      });
     }
-}
+  }
+  
 
-function servicos(){
+function relatorio(){
     //acho que essa aqui funciona melhor com redirecionamento
     
-    window.location.href= "servicos.html"
+    window.location.href= "relatorio.html"
 }
 
 window.createCliente = createCliente
 window.viewClientes = viewClientes
-window.servicos = servicos
+window.relatorio = relatorio

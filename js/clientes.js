@@ -78,7 +78,7 @@ function criarTabela(div, token){
 
 export { criarTabela }
 
-function formCadastro(div, token){
+function formCadastro(div, token, veio = null){
     const container = document.createElement('div');
     container.classList.add('container', 'shadow-lg', 'bg-light', 'p-5');
 
@@ -87,6 +87,7 @@ function formCadastro(div, token){
     container.appendChild(h1)
 
     const form = document.createElement('form');
+    form.setAttribute('id', 'form')
 
     const form_group1 = document.createElement('div');
     form_group1.classList.add('form-group');
@@ -148,6 +149,7 @@ function formCadastro(div, token){
 
     const button = document.createElement('button');
     button.setAttribute('type', 'submit');
+    button.setAttribute('id', 'enviar');
     button.classList.add('btn', 'btn-primary', 'mx-auto', 'd-block');
     button.innerHTML = "Enviar"
 
@@ -158,17 +160,17 @@ function formCadastro(div, token){
     form.appendChild(button);
 
     container.appendChild(form);
-
+    console.log(veio)
     div.appendChild(container)
-
-
     criarCliente(token, form).then(result => {
+        if(veio === 'relatorio'){
+            relatorio()
+        }
         if(result === 1){
             div.innerHTML = " "
             criarTabela(div, token)
         }
     })
-    
 }
 
 export { formCadastro }
