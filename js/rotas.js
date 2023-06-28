@@ -30,10 +30,10 @@ function createCliente(veio = null) {
   }
   
 
-function relatorio(){
+function relatorio(cliente = null){
     //acho que essa aqui funciona melhor com redirecionamento
     
-    window.location.href= "relatorio.html"
+    window.location.href= "relatorio.html?cliente="+cliente
 }
 
 window.createCliente = createCliente

@@ -15,11 +15,12 @@
     <div class="container shadow-lg bg-light">
         <div class="row justify-content-md-center p-3">
             <div class="col-8 bg-light" id="montagem">
-                <h4 class="text-info">Relatório</h4>
+                <h4 class="text-info">KM5 REFRIGERAÇÕES LTDA</h4>
+                <p>Rua 13, Q 08, N° 23, Vinhais - São Luís - Ma. - fone: (98) 98852-6719 / (98) 98402-6672</p>
                 <div class="row">
                     <div class="input-group col-10">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Cliente</span>
+                            <span class="input-group-text">Cliente</span>
                         </div>
                         <select name="clientes" id="clientes" class="form-control"></select>
                     </div>      
@@ -27,12 +28,47 @@
                         <button class="btn btn-info" id="cadastrar" onclick="createCliente('relatorio')" disabled>Cadastrar</button>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row">
                     <label for="sem">
                         <input type="checkbox" name="sem" id="sem" class="ml-3"> Não achei o cliente
                     </label>
                 </div>
-                <button class="btn btn-dark" id="salvar" disabled onclick="window.salvar()">Salvar</button> <!--dark se não houver nada-->
+                <div class="row">
+                    <div class="input-group col-5">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Telefone</span>
+                        </div>
+                        <div name="clientes" id="telefone" class="form-control"></div>
+                    </div>      
+                    <div class="input-group col-7">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Endereço</span>
+                        </div>
+                        <div name="clientes" id="endereco" class="form-control"></div>
+                    </div> 
+                </div>
+                <div class="row mt-4">
+                    <div class="input-group col-12">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >descrição do problema</span>
+                        </div>
+                        <textarea name="clientes" id="problema" class="form-control" rows="2" maxlength="100"></textarea>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="input-group col-12">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >serviços</span>
+                        </div>
+                        <select name="clientes" id="servicos" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="border border-light" id="servicosAdd"></div>
+                    </div>
+                </div>
+                <button class="btn btn-dark mt-3" id="salvar" disabled onclick="window.salvar()">Salvar</button> <!--dark se não houver nada-->
                 <p id="info"></p>
             </div>
         </div>
@@ -65,7 +101,6 @@
         }
         
     })
-    
 
 </script>
 </html>

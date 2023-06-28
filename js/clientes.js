@@ -112,7 +112,7 @@ function formCadastro(div, token, veio = null){
     const input2 = document.createElement('input');
     input2.classList.add('form-control');
     input2.setAttribute('name', 'telefone')
-    input2.setAttribute('placeholder', '(00) 0000-0000');
+    input2.setAttribute('placeholder', '(00) 0 0000-0000');
     $(input2).mask("(00) 0 0000-0000");
 
     form_group2.appendChild(label2);
@@ -162,11 +162,11 @@ function formCadastro(div, token, veio = null){
     container.appendChild(form);
     console.log(veio)
     div.appendChild(container)
-    criarCliente(token, form).then(result => {
+    criarCliente(token, form).then(data => {
         if(veio === 'relatorio'){
-            relatorio()
+            relatorio(data.id_cliente)
         }
-        if(result === 1){
+        if(data !== null){
             div.innerHTML = " "
             criarTabela(div, token)
         }

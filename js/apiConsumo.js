@@ -8,7 +8,7 @@ function get(token, rota){
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        //console.log(data);
         return data
     })
     .catch(error => { 
@@ -35,8 +35,8 @@ function criarCliente(token, form) {
         })
           .then(response => response.json())
           .then(data => {
-            window.alert("cliente atualizado com sucesso!");
-            resolve(1);
+            window.alert(data.message);
+            resolve(data);
           })
           .catch(error => {
             console.error(error);
