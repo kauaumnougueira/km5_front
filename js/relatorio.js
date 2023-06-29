@@ -4,6 +4,7 @@ window.onload = servicos()
 function servicos(){
     const servicosAdd = document.querySelector('#servicosAdd')
     const select = document.querySelector('#servicos');
+    
     let rota = 'getservicos'
     get(token, rota).then(data => {
         data.forEach(e => {
@@ -14,8 +15,29 @@ function servicos(){
         })
     })
     select.addEventListener('change', () => {
+        //mascara
+        $(document).ready(function() {
+            $('.preco').inputmask({
+              alias: 'numeric',
+              radixPoint: ',',
+              groupSeparator: '.',
+              autoGroup: true,
+              digits: 2,
+              numericInput: true,
+              placeholder: '0',
+              rightAlign: false,
+              onBeforeMask: function (value) {
+                return value.replace('.', '');
+              }
+            });
+          });
+          //
+        const divServ = document.createElement('div')
+        divServ.classList.add('row')
+        const divPreco = document.createElement('div')
+
         const selectedOption = select.selectedOptions[0];
-        const selectedClientId = selectedOption.getAttribute('value');
+        const selectedServId = selectedOption.getAttribute('value');
         let servico = document.createElement('p')
         let btn = document.createElement('button')
         btn.classList.add('btn', 'btn-outline-secondary', 'px-2')
@@ -23,11 +45,16 @@ function servicos(){
         btn.addEventListener('click', () => {
             servicosAdd.removeChild(servico)
         })
+        divPreco.classList.add('input-group', 'col-3')
+        divPreco.innerHTML = '<div class="input-group-prepend"> <span class="input-group-text">Preço</span> </div> <input name="" id="'+selectedServId+'" class="form-control preco"></input>'
 
-        servico.classList.add('input-group-text', 'col-3', 'justify-content-between')
+        servico.classList.add('input-group-text', 'col-3', 'justify-content-between', 'mb-2')
         servico.textContent += selectedOption.textContent
         servico.appendChild(btn)
-        servicosAdd.appendChild(servico)
+
+        divServ.appendChild(servico)
+        divServ.appendChild(divPreco)
+        servicosAdd.appendChild(divServ)
     })
 }
 
@@ -40,7 +67,7 @@ function clientes(){
     const telefone = document.querySelector('#telefone')
     const endereco = document.querySelector('#endereco')
 
-    if(clienteId !== null){
+    if(clienteId !== 'null' && clienteId !== null){
         let rota = 'getcliente/'+clienteId
         get(token, rota).then(cliente => {
             let option = document.createElement('option');
@@ -69,6 +96,7 @@ function clientes(){
                   });
         })
     })
+    history.replaceState({}, document.title, "relatorio.html");
 }
 
 function salvar(){
