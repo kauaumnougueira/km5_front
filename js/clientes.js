@@ -1,10 +1,45 @@
 import { get } from './apiConsumo.js'
 import { criarCliente } from './apiConsumo.js'
 
-function criarTabela(div, token){
-    const container = document.createElement('div')
-    container.setAttribute('id', 'div-table')
-    container.classList.add('container', 'shadow-lg', 'bg-light');
+function pesquisa(div){
+    if(document.querySelector('#pesquisa') === null){
+        //colocar a estrutura abaixo na div
+        const container = document.createElement('div')
+        container.classList.add('input-group', 'justify-content-md-center')
+
+        const divinp = document.createElement('div')
+        divinp.classList.add('row', 'w-50')
+        const input = document.createElement('input')
+            input.classList.add('form-control', 'col-8', 'mr-4')
+            input.setAttribute('id', 'pesquisa')
+
+            const button = document.createElement('button')
+            button.classList.add('btn', 'btn-info', 'col-3')
+            button.setAttribute('id', 'pesquisaBtn')
+            button.textContent = 'Pesquisar'
+
+            divinp.appendChild(input)
+            divinp.appendChild(button)
+
+        container.appendChild(divinp)
+
+        div.appendChild(container)
+        return button
+    }
+    let button = document.querySelector('#pesquisaBtn')
+    if(button !== null)
+        return button
+}
+
+function criarTabela(div, token, pesquisaInp = null){
+    let container = document.querySelector('#div-table')
+    if(container === null){
+        container = document.createElement('div')
+        container.setAttribute('id', 'div-table')
+        container.classList.add('container', 'shadow-lg', 'bg-light', 'pt-2');
+    }
+    
+    const pesquisaBtn = pesquisa(container)
     
     //const titulo = document.createElement('div')
     //titulo.textContent = "CLIENTES"
@@ -12,7 +47,11 @@ function criarTabela(div, token){
 
     const row = document.createElement('div')
     row.classList.add('row', 'justify-content-center')
-    
+    pesquisaBtn.addEventListener('click', () => {
+        container.removeChild(row)
+        const input = document.querySelector('#pesquisa')
+        criarTabela(div, token, input.value)
+    })
 
     const col = document.createElement('div')
     col.classList.add('col-md-12', 'mt-2')
@@ -45,27 +84,32 @@ function criarTabela(div, token){
     const rota = 'getclientes'
     get(token, rota).then(data => {
         data.forEach(e => {
-            const linha = document.createElement('tr')
-            linha.setAttribute('style', 'cursor: pointer; user-select: none')
-            linha.setAttribute('scope', 'row')
-            linha.addEventListener('click', (event) =>{
-                event.preventDefault()
-                document.cookie = "id=" + e.id + "; path=/";
-                div.innerHTML = " "
-                //render(div, '../perfil.html', 'js/perfil.js')
-                //nao renderiza mais, mas muda de pagina
-                location.href = "perfil.html"
-            })
-            const tdNome = document.createElement('td')
-            const tdTelefone = document.createElement('td')
-            const tdEndereco = document.createElement('td')
-            tdNome.textContent = e.nome
-            tdTelefone.textContent = e.telefone
-            tdEndereco.textContent = e.endereco
-            linha.appendChild(tdNome)
-            linha.appendChild(tdTelefone)
-            linha.appendChild(tdEndereco)
-            tbody.appendChild(linha)
+            if(pesquisaInp === null){
+                pesquisaInp = ""
+            }
+            if(e.nome.includes(pesquisaInp)){
+                const linha = document.createElement('tr')
+                linha.setAttribute('style', 'cursor: pointer; user-select: none')
+                linha.setAttribute('scope', 'row')
+                linha.addEventListener('click', (event) =>{
+                    event.preventDefault()
+                    document.cookie = "id=" + e.id + "; path=/";
+                    div.innerHTML = " "
+                    //render(div, '../perfil.html', 'js/perfil.js')
+                    //nao renderiza mais, mas muda de pagina
+                    location.href = "perfil.html"
+                })
+                const tdNome = document.createElement('td')
+                const tdTelefone = document.createElement('td')
+                const tdEndereco = document.createElement('td')
+                tdNome.textContent = e.nome
+                tdTelefone.textContent = e.telefone
+                tdEndereco.textContent = e.endereco
+                linha.appendChild(tdNome)
+                linha.appendChild(tdTelefone)
+                linha.appendChild(tdEndereco)
+                tbody.appendChild(linha)   
+            }
         })
     })
 

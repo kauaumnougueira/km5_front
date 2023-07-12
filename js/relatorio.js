@@ -14,47 +14,64 @@ function servicos(){
             select.appendChild(option)
         })
     })
+    let servicosCounter = 0;
+    let row
     select.addEventListener('change', () => {
         //mascara
         $(document).ready(function() {
             $('.preco').inputmask({
-              alias: 'numeric',
-              radixPoint: ',',
-              groupSeparator: '.',
-              autoGroup: true,
-              digits: 2,
-              numericInput: true,
-              placeholder: '0',
-              rightAlign: false,
-              onBeforeMask: function (value) {
-                return value.replace('.', '');
-              }
+                alias: 'numeric',
+                radixPoint: ',',
+                groupSeparator: '.',
+                autoGroup: true,
+                digits: 2,
+                numericInput: true,
+                placeholder: '0',
+                rightAlign: false,
+                onBeforeMask: function (value) {
+                    return value.replace('.', '');
+                }
             });
-          });
-          //
+        });
+        //
         const divServ = document.createElement('div')
-        divServ.classList.add('row')
+        divServ.classList.add('row', 'col-6', 'justify-content-between')
         const divPreco = document.createElement('div')
 
+        //ATRIBUINDO NOME DE SERVIÇO E BOTÃO DE EXCLUIR
         const selectedOption = select.selectedOptions[0];
         const selectedServId = selectedOption.getAttribute('value');
         let servico = document.createElement('p')
-        let btn = document.createElement('button')
-        btn.classList.add('btn', 'btn-outline-secondary', 'px-2')
-        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16"> <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/> </svg>'
-        btn.addEventListener('click', () => {
-            servicosAdd.removeChild(servico)
-        })
-        divPreco.classList.add('input-group', 'col-3')
-        divPreco.innerHTML = '<div class="input-group-prepend"> <span class="input-group-text">Preço</span> </div> <input name="" id="'+selectedServId+'" class="form-control preco"></input>'
 
-        servico.classList.add('input-group-text', 'col-3', 'justify-content-between', 'mb-2')
-        servico.textContent += selectedOption.textContent
+        let btn = document.createElement('button')
+        btn.classList.add('btn', 'btn-sm', 'btn-outline-secondary', 'border-0')
+        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16"> <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/> </svg>'
+        btn.addEventListener('click', () => {
+            row.removeChild(divServ)
+        })
+
+        servico.classList.add('input-group-text', 'col-5', 'justify-content-between', 'mb-5', 'h-50', 'p-1', 'px-2', 'pl-1')
+        servico.innerHTML = selectedOption.textContent
+        //servico.textContent += 
         servico.appendChild(btn)
+
+        
+        //INPUT DE PREÇO
+        divPreco.classList.add('input-group', 'col-7', 'mb-5')
+        divPreco.innerHTML = '<div class="input-group-prepend"> <span class="input-group-text">Preço</span> </div> <input name="" id="'+selectedServId+'" class="form-control preco h-100"></input>'
 
         divServ.appendChild(servico)
         divServ.appendChild(divPreco)
-        servicosAdd.appendChild(divServ)
+
+        if (servicosCounter % 2 === 0) { // Ajustado para % 2
+            row = document.createElement('div');
+            row.classList.add('row', 'px-3', 'justify-content-center');
+            servicosAdd.appendChild(row);
+        }
+      
+      
+        row.appendChild(divServ);
+        servicosCounter++;
     })
 }
 

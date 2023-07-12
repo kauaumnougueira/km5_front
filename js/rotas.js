@@ -4,6 +4,15 @@ const token = document.head.querySelector('meta[name="csrf-token"]').getAttribut
 const filePath = window.location.pathname;
 const fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
 
+window.onload = header()
+function header(){
+  if(fileName === "index.html"){
+    const home = document.querySelector('#home')
+    home.classList.add('text-dark', 'font-weight-bold')
+  }
+}
+
+
 //renderizando main
 function viewClientes(){
     
