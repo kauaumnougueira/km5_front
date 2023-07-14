@@ -3,7 +3,10 @@ import { criarClienteServico, get } from './apiConsumo.js'
 window.onload = servicos()
 function servicos(){
     const servicosAdd = document.querySelector('#servicosAdd')
-    const select = document.querySelector('#servicos');
+    const select = document.querySelector('#servicos')
+    const vazio = document.createElement('option')
+    vazio.textContent = 'Selecione uma opção';
+    select.appendChild(vazio)
     
     let rota = 'getservicos'
     get(token, rota).then(data => {
@@ -13,26 +16,18 @@ function servicos(){
             option.textContent = e.nome
             select.appendChild(option)
         })
+        let outro = document.createElement('option')
+        outro.setAttribute('value', 'outro')
+        outro.textContent = 'outro'
+        select.appendChild(outro)
     })
+    
+
     let servicosCounter = 0;
     let row
     select.addEventListener('change', () => {
-        //mascara
-        $(document).ready(function() {
-            $('.preco').inputmask({
-                alias: 'numeric',
-                radixPoint: ',',
-                groupSeparator: '.',
-                autoGroup: true,
-                digits: 2,
-                numericInput: true,
-                placeholder: '0',
-                rightAlign: false,
-                onBeforeMask: function (value) {
-                    return value.replace('.', '');
-                }
-            });
-        });
+        vazio.setAttribute('disabled', 'true');
+       
         //
         const divServ = document.createElement('div')
         divServ.classList.add('row', 'col-6', 'justify-content-between')
@@ -41,7 +36,46 @@ function servicos(){
         //ATRIBUINDO NOME DE SERVIÇO E BOTÃO DE EXCLUIR
         const selectedOption = select.selectedOptions[0];
         const selectedServId = selectedOption.getAttribute('value');
-        let servico = document.createElement('p')
+        let servico = document.createElement('div')
+        const selectTS = document.createElement('select')
+        
+        if(selectedServId ===  'outro'){
+            const input = document.createElement('input')
+            input.classList.add('form-control')
+            input.setAttribute('placeholder', 'outro')
+            input.setAttribute('required', 'true')
+            divServ.appendChild(input)
+            divPreco.classList.add('input-group', 'col-7', 'mb-2')
+            divPreco.innerHTML = '<div class="input-group-prepend"> <span class="input-group-text">Preço</span> </div> <input name="" id="'+selectedServId+'" class="form-control preco h-100" value="'+0+'"></input>'
+            mascara()
+        }else{
+            //select TipoServico select de tiposervico em cada servico kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+            
+            selectTS.classList.add('form-control')
+            vazio.removeAttribute('disabled')
+            selectTS.appendChild(vazio)
+            divServ.appendChild(selectTS)
+        }
+        rota = 'gettiposervicos/'+selectedServId
+        get(token, rota).then(data => {
+            data.forEach(e => {
+                let option = document.createElement('option')
+                option.setAttribute('value', e.id)
+                option.setAttribute('price', e.preco)
+                option.textContent = selectedOption.textContent + ' ' + e.nome
+                selectTS.appendChild(option)
+            })
+        })
+
+        selectTS.addEventListener('change', () => {
+            vazio.setAttribute('disabled', 'true');
+            const selectedOptionTS = selectTS.selectedOptions[0];
+            const selectedServPrice = selectedOptionTS.getAttribute('price');
+            //INPUT DE PREÇO
+            divPreco.classList.add('input-group', 'col-7', 'mb-2')
+            divPreco.innerHTML = '<div class="input-group-prepend"> <span class="input-group-text">Preço</span> </div> <input name="" id="'+selectedServId+'" class="form-control preco h-100"value="'+ selectedServPrice*100 +'"></input>'
+            mascara()
+        })
 
         let btn = document.createElement('button')
         btn.classList.add('btn', 'btn-sm', 'btn-outline-secondary', 'border-0')
@@ -54,13 +88,7 @@ function servicos(){
         servico.innerHTML = selectedOption.textContent
         //servico.textContent += 
         servico.appendChild(btn)
-
         
-        //INPUT DE PREÇO
-        divPreco.classList.add('input-group', 'col-7', 'mb-5')
-        divPreco.innerHTML = '<div class="input-group-prepend"> <span class="input-group-text">Preço</span> </div> <input name="" id="'+selectedServId+'" class="form-control preco h-100"></input>'
-
-        divServ.appendChild(servico)
         divServ.appendChild(divPreco)
 
         if (servicosCounter % 2 === 0) { // Ajustado para % 2
@@ -68,8 +96,8 @@ function servicos(){
             row.classList.add('row', 'px-3', 'justify-content-center');
             servicosAdd.appendChild(row);
         }
-      
-      
+    
+    
         row.appendChild(divServ);
         servicosCounter++;
     })
@@ -102,7 +130,7 @@ function clientes(){
                 option.setAttribute('value', e.id)
                 option.textContent = e.nome
                 select.appendChild(option)
-                select.addEventListener('change', () => {
+                select.addEventListener('click', () => {
                     const selectedOption = select.selectedOptions[0];
                     const selectedClientId = selectedOption.getAttribute('value');
                     rota = 'getcliente/'+selectedClientId
@@ -136,3 +164,22 @@ function salvar(){
 }
 
 window.salvar = salvar 
+
+function mascara(){
+    //mascara
+    $(document).ready(function() {
+        $('.preco').inputmask({
+            alias: 'numeric',
+            radixPoint: ',',
+            groupSeparator: '.',
+            autoGroup: true,
+            digits: 2,
+            numericInput: true,
+            placeholder: '0',
+            rightAlign: false,
+            onBeforeMask: function (value) {
+                return value.replace('.', '');
+            }
+        });
+    });
+}
