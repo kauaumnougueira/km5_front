@@ -68,8 +68,16 @@
                         <div class="border border-light" id="servicosAdd"></div>
                     </div>
                 </div>
-                <button class="btn btn-dark mt-3" id="salvar" disabled onclick="window.salvar()">Salvar</button> <!--dark se não houver nada-->
-                <p id="info"></p>
+                <div class="row ml-1">
+                    <button class="btn btn-dark mt-3" id="salvar" disabled onclick="window.salvar()">Salvar</button> <!--dark se não houver nada-->
+                    <!-- <p id="info"></p> -->
+                    <div class="input-group col-4 mt-3">
+                       <input name="data" id="data" class="form-control" placeholder="DD/MM/AAAA" required>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">DATA</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -103,6 +111,6 @@
         }
         
     })
-    
+    $('#data').inputmask("00/00/0000");
 </script>
 </html>

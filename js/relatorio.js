@@ -26,8 +26,8 @@ function servicos(){
     let servicosCounter = 0;
     let row
     select.addEventListener('change', () => {
-        vazio.setAttribute('disabled', 'true');
-       
+        vazio.setAttribute('disabled', 'true')
+
         //
         const divServ = document.createElement('div')
         divServ.classList.add('row', 'col-6', 'justify-content-between')
@@ -56,16 +56,22 @@ function servicos(){
             selectTS.appendChild(vazio)
             divServ.appendChild(selectTS)
         }
-        rota = 'gettiposervicos/'+selectedServId
-        get(token, rota).then(data => {
-            data.forEach(e => {
-                let option = document.createElement('option')
-                option.setAttribute('value', e.id)
-                option.setAttribute('price', e.preco)
-                option.textContent = selectedOption.textContent + ' ' + e.nome
-                selectTS.appendChild(option)
+
+        //para api
+        if(selectedServId !== 'outro'){
+            rota = 'gettiposervicos/'+selectedServId
+
+            get(token, rota).then(data => {
+                data.forEach(e => {
+                    let option = document.createElement('option')
+                    option.setAttribute('value', e.id)
+                    option.setAttribute('price', e.preco)
+                    option.textContent = selectedOption.textContent + ' ' + e.nome
+                    selectTS.appendChild(option)
+                })
             })
-        })
+        }
+
 
         selectTS.addEventListener('change', () => {
             vazio.setAttribute('disabled', 'true');
@@ -145,21 +151,13 @@ function clientes(){
 }
 
 function salvar(){
-    //pegar todos os atributos de id e salvar no cliente em questã
-    const select = document.querySelector('#clientes')
-    const clienteId = select.getAttribute('value')
-
-    const tipoServico = document.querySelector('montagem-body')
-    if(tipoServico.children !== null ){
-        tipoServico.children.forEach(data => {
-            let tsid = data.getAttribute('idTipoServ')
-            if(!isNaN(tsid)){
-                let salvar = '/createclienteservico/' + clienteId + '/' + tsId
-                criarClienteServico(token, salvar)
-            }
-        })
-    }
-    
+    //id de relatório relacionado ao cliente servico pra saber quando foi feito, por exemplo
+    //criar registros de cliente-servico
+    //criar registro de relatorio com id de cliente servico
+    //cliente
+    //descrição cliente
+    //servicos-tiposervicos
+    //outros
 
 }
 
