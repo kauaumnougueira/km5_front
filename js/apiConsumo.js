@@ -92,3 +92,25 @@ function criarClienteServico(token, rota){
 }
 
 export { criarClienteServico }
+
+function criarRelatorio(data){
+    fetch('http://127.0.0.1:8000/api/createrelatorio', {
+        method: 'POST',
+        body: data,
+        headers: {
+            'X-CSRF-TOKEN': token
+        },
+        mode: 'cors'
+    })
+        .then(response => response.json())
+        .then(data => {
+            //console.log(data);
+            window.alert("cliente-servico atualizado com sucesso!")
+            return 1
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+export { criarRelatorio }

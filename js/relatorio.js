@@ -1,4 +1,4 @@
-import { criarClienteServico, get } from './apiConsumo.js'
+import { criarClienteServico, get, criarRelatorio } from './apiConsumo.js'
 
 window.onload = servicos()
 function servicos(){
@@ -158,7 +158,14 @@ function salvar(){
     //descrição cliente
     //servicos-tiposervicos
     //outros
-
+    const descricaoa = document.querySelector('#descricao')
+    const dataa = document.querySelector('#data')
+    const data_relatorio = {
+        descricao: descricaoa.value,
+        data: dataa.value
+    };
+    const jsonData = JSON.stringify(data_relatorio);
+    criarRelatorio(jsonData);
 }
 
 window.salvar = salvar 

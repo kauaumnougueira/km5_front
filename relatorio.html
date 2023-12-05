@@ -52,7 +52,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" >descrição do problema</span>
                         </div>
-                        <textarea name="clientes" id="problema" class="form-control" rows="2" maxlength="100"></textarea>
+                        <textarea name="descricao" id="descricao" class="form-control" rows="2" maxlength="100"></textarea>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -95,11 +95,12 @@
     const headerComp = 'componentes/header.html'
     window.onload = render(headerDiv, headerComp, null)
 
-    const check = document.querySelector('#sem')
-    check.addEventListener('click', () => {
+    //const check = document.querySelector('#sem')
+    //check.addEventListener('click', () => {
         const clientes = document.querySelector('#clientes')
         const cadastrar = document.querySelector('#cadastrar')
         const info = document.querySelector('#info')
+        /*
         if(check.checked){
             clientes.setAttribute('disabled', 'true') //nao pode salvar relatorio se esse checkbox for acionado sem cadastro
             cadastrar.removeAttribute('disabled')
@@ -109,8 +110,9 @@
             cadastrar.setAttribute('disabled', 'true')
             info.textContent = ' '
         }
+        */
         
-    })
-    $('#data').inputmask("00/00/0000");
+   // })
+  //  $('#data').inputmask("00/00/0000");
 </script>
 </html>
